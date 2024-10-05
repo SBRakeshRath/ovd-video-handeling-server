@@ -1,7 +1,6 @@
 import ffmpeg from "fluent-ffmpeg";
 import ffmpegInstaller from "@ffmpeg-installer/ffmpeg";
 import fs from "fs";
-import uploadMergedVideos from "../../storage/uploadMergedVideo.js";
 import updateStatus from "../statusDb/updateStatus.js";
 
 export default async function mergeAudioVideo(
@@ -13,11 +12,6 @@ export default async function mergeAudioVideo(
   try {
     ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
-    console.log("Merging audio and video");
-
-    console.log(audioPath);
-    console.log(videoPath);
-    console.log(outputPath);
 
     await new Promise<void>((resolve, reject) => {
       let percent = 0;
