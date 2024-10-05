@@ -8,7 +8,7 @@ import uploadMergedVideos from "../../storage/uploadMergedVideo.js";
 //create a unique file name for the video which is not present in the temp folder
 function createUniqueFileName(extension: string) {
   // const tempDir = os.tmpdir() + "/";
-  const tempDir = "/tmp23"
+  const tempDir = "/tmp23/"
   const fileName =
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15);
