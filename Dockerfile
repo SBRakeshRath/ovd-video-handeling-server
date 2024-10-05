@@ -1,36 +1,19 @@
-# Build  node js image from typescript image
 
-FROM node:latest as builder
+# Setup Node
+FROM node:18-alpine as build
 
-WORKDIR /usr/src/app
-
-
-COPY package*.json ./
-
+# Dependency and Build
+WORKDIR /app
+COPY *.json ./
 RUN npm install
 
-# Development stage
-FROM builder as development
-# Set NODE_ENV to development
-ENV NODE_ENV=development
+RUN npm run build
 
-# Expose the port the app runs on
-EXPOSE 8800
+COPY . .
 
-# Command to run the application(in development)
-CMD ["npm", "run", "dev"]
+# Create JS Build
+# RUN npm run build
 
-# Production stage
-FROM builder as production
-# Set NODE_ENV to production
-ENV NODE_ENV=production
+EXPOSE 3000
 
-# Run any production-specific build steps if needed here
-
-# Run the production command
 CMD ["npm", "start"]
-
-
-
-
-
