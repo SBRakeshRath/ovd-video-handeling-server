@@ -4,16 +4,17 @@ FROM node:18-alpine as build
 
 # Dependency and Build
 WORKDIR /app
-COPY *.json ./
+COPY package*.json tsconfig.json ./
 RUN npm install
 
-RUN npm run build
 
 COPY . .
+
+RUN npm run build
 
 # Create JS Build
 # RUN npm run build
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["npm", "start"]
