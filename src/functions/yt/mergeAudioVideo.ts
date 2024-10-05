@@ -17,7 +17,6 @@ export default async function mergeAudioVideo(
       let percent = 0;
       let totalTime: number = 0;
 
-      // console.log("merging");
       // wait
       const i = ffmpeg()
         .input(videoPath)
@@ -48,8 +47,11 @@ export default async function mergeAudioVideo(
         .run();
     });
 
-    console.log("uploading");
     //delete audio and video files
+
+    // console.log(outputPath);
+    // console.log(videoPath)
+    // console.log(audioPath)
 
     fs.unlinkSync(audioPath);
     fs.unlinkSync(videoPath);

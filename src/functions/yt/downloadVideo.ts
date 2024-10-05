@@ -31,7 +31,6 @@ export default async function DownloadVideo(
 
   try {
     // return false;
-    console.log("Downloading video2");
     const info = await ytdl.getInfo(link);
     const formats = info.formats;
     
@@ -47,8 +46,10 @@ export default async function DownloadVideo(
 
     const audioFormat = info.formats
       .filter((format) => format.hasAudio && !format.hasVideo)
-      .find((format) => format.container === videoFormat.container);
+      .find((format) => format.audioQuality === "AUDIO_QUALITY_MEDIUM");
+
     if (!audioFormat) return false;
+
 
 
     let videoFileExtension = formats.find(
@@ -66,21 +67,16 @@ export default async function DownloadVideo(
     //update status to downloading
     await updateStatus("downloading-video", id, 0);
 
-    console.log("step3");
 
     await new Promise<void>((resolve, reject) => {
       let percent = 0;
       // wait
       ytdl(link, {
-        // filter: (format) => {
-        //   console.log(format.qualityLabel);
-        //   if(format.qualityLabel === quality){
-        //     console.log(format.qualityLabel)
-        //     console.log("Found")
-        //     return format.qualityLabel === quality
-        //   }
-        //   console.log("not found")
-        // },
+        filter: (format) => {
+          if(format.qualityLabel === quality){
+            return format.qualityLabel === quality
+          }
+        },
       })
         .on("progress", async (chunkLength, downloaded, total) => {
 
@@ -141,7 +137,7 @@ export default async function DownloadVideo(
 
     //convert audio into mp3
 
-    const outputPath = createUniqueFileName(videoFileExtension);
+    const outputPath = createUniqueFileName("mp4");
     await updateStatus("merging", id, 0);
     //calculate time
     const startTime = Date.now();
@@ -152,6 +148,10 @@ export default async function DownloadVideo(
       outputPath,
       id
     );
+
+    if (!res) {
+      return false;
+    }
 
     //calculate time
     const endTime = Date.now();
