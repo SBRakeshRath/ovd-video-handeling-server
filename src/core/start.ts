@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.post("/", async (req, res) => {
 
   //now get headers from the request
-  console.log(req.body)
+  // console.log(req.body)
 
   const headers = req.headers;
   const taskRetryCount = headers["x-cloudtasks-taskretrycount"];
@@ -53,7 +53,6 @@ app.post("/", async (req, res) => {
     // DownloadVideo(req.body.url, req.body.quality);
 
     try {
-      console.log("Downloading video");
       const result = await DownloadVideo(
         req.body.url,
         req.body.quality,
