@@ -62,6 +62,7 @@ export default async function DownloadVideo(
     }
 
     const videoFilePath = createUniqueFileName(videoFileExtension);
+    console.log("videoFilePath--------");
     console.log(videoFilePath);
 
     const videoWritableStream = fs.createWriteStream(videoFilePath);
