@@ -13,6 +13,12 @@ export default async function mergeAudioVideo(
   try {
     ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
+    console.log("Merging audio and video");
+
+    console.log(audioPath);
+    console.log(videoPath);
+    console.log(outputPath);
+
     await new Promise<void>((resolve, reject) => {
       let percent = 0;
       let totalTime: number = 0;
